@@ -76,6 +76,7 @@ To install the ``autotest`` tool:
   - Clone the repo
   - Create virtualenv using ``python3 -m venv venv-name``
   - Activate the virtual environment using ``source venv-name/bin/activate``
+  - Navigate to the main folder ``cd selenium-based-llm-model``
   - Install requirements using requirements.txt ``pip install -r requirements.txt``
   - Provide the test data in ``auth_test_data.json`` file in the same directory.
   - Provide the name of the testing data file in the functional arguements of this given method:
