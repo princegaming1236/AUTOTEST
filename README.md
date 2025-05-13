@@ -1,6 +1,6 @@
 # AUTOTEST: Automated test case and Selenium script generation using LLM 
 
-![Project Logo](url_to_your_project_logo) <!-- Include a project logo or banner here, if applicable -->
+<img src="./autotest_image.jpg" alt="Project Logo" width="100" height="auto"> <!-- Include a project logo or banner here, if applicable -->
 
 Short project description goes here.
 
