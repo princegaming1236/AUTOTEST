@@ -2,7 +2,6 @@
 
 <img src="./autotest_image.jpg" alt="Project Logo" width="100" height="auto"> <!-- Include a project logo or banner here, if applicable -->
 
-Short project description goes here.
 
 ## Table of Contents
 
@@ -73,7 +72,7 @@ Instructions on how to get started with your project, including installation, pr
 
 ### Installation
 
-Provide detailed installation steps using code blocks to show commands or configuration files.
+To install the ``autotest`` tool:
   - Clone the repo
   - Create virtualenv using ``python3 -m venv venv-name``
   - Activate the virtual environment using ``source venv-name/bin/activate``
@@ -224,3 +223,4 @@ This project is licensed under the MIT license - see [LICENSE.md](LICENSE.md) fo
 ## Acknowledgments
 
 Give credit to any resources or individuals whose work or support has been instrumental to your project.
+[Mindfire Digital LLP](https://www.mindfiresolutions.com/)

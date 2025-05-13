@@ -1,4 +1,4 @@
-# Code of Conduct - {AUTOTEST}
+# Code of Conduct - AUTOTEST
 
 ## Our Pledge
 

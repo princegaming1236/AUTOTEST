@@ -1,6 +1,6 @@
-# Contributing to [AUTOTEST]
+# Contributing to AUTOTEST
 
-We welcome and appreciate your contribution to [Project Name]. These guidelines will help ensure a smooth and collaborative process for everyone.
+We welcome and appreciate your contribution to AUTOTEST. These guidelines will help ensure a smooth and collaborative process for everyone.
 
 ## How Can You Contribute?
 
