@@ -1,0 +1,40 @@
+{
+    "credentials": {
+        "valid": {
+            "username": "practice",
+            "password": "SuperSecretPassword!"
+        },
+        "invalid": {
+            "username": "invaliduser",
+            "password": "short"
+        }
+    },
+    "registration_fields": {
+        "username": {
+            "valid": ["ankituser"],
+            "invalid": ["","testuser"]
+        },
+        "password": {
+            "valid": ["ankit1234"],
+            "invalid": ["","test1234"]
+        },
+        "confirm password": {
+            "valid": ["ankit1234"],
+            "invalid": ["", "hggdgsa"]
+        }
+    },
+    "contact_form": {
+        "valid": {
+            "full name": "Ankit Saha",
+            "phone": "+911234567899",
+            "email": "ankitbbsr2002@gmail.com",
+            "subject": "Test Enquiry",
+            "message": "Valid inquiry message"
+        },
+        "invalid": {
+            "full name": "",
+            "phone": "+9182608",
+            "email": "invalid-email"
+        }
+    }
+}
