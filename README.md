@@ -14,6 +14,7 @@
     - [Installation](#installation)
   - [Usage](#usage)
   - [Contributing](#contributing)
+  - [Future Scope and Improvements](#future-scope-and-improvements)
   - [License](#license)
   - [Acknowledgments](#acknowledgments)
 
@@ -214,7 +215,7 @@ Add link to [CONTRIBUTING.md](CONTRIBUTING.md) file.
 - The current version recursively extracts unique pages or urls from the base or given url, then analyzes and produces test cases and selenium scripts for execution in an automated manner.
 - Analysing and giving suggestions on the improvement of the web-pages content.
 - Checking whether web-page is upto the latest SEO standards.
-- Moving all the LLM prompts in a configuration file which allows easy modification and simpler prompt engineering.
+- Moving or externalizing all the LLM prompts in a configuration file(.yaml) which allows easy modification and enhanced prompt engineering. (already achieved, checkout 'dev' branch)
 
 
 ## License
